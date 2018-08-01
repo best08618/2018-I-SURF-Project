@@ -1,7 +1,9 @@
 package edu.stanford.nlp.parser.lexparser.demo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 import java.util.List;
@@ -17,6 +19,7 @@ import edu.stanford.nlp.process.TokenizerFactory;
 import edu.stanford.nlp.trees.GrammaticalStructure;
 import edu.stanford.nlp.trees.GrammaticalStructureFactory;
 import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.trees.TreePrint;
 import edu.stanford.nlp.trees.TreebankLanguagePack;
 import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.ScoredObject;
@@ -48,7 +51,7 @@ class ParserDemo {
 		if (args.length == 1) {
 			demoAPI(lp);
 		} else {
-			String textFile = "/Users/zoey/Downloads/CoreNLP-master/src/edu/stanford/nlp/parser/lexparser/demo/input.txt";
+			String textFile = "/Users/zoey/git/2018-I-SURF-Project/CoreNLP-master/src/edu/stanford/nlp/parser/lexparser/demo/input.txt";
 			demoDP(lp, textFile);
 		}
 	}
@@ -80,6 +83,7 @@ class ParserDemo {
 		File file = new File(filename);
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufReader = new BufferedReader(fileReader);
+		BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
 
 		String line = "";
 		while ((line = bufReader.readLine()) != null) {
@@ -90,7 +94,6 @@ class ParserDemo {
 
 			// This option shows loading and using an explicit tokenizer
 
-			System.out.println("Sentence : " + line);
 			String sent2 = line;
 
 			TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
@@ -108,8 +111,16 @@ class ParserDemo {
 				for (int i = 0; i < tdl.size(); i++) {
 					String extractElement = tdl.get(i).reln().toString();
 					if (extractElement.equals("dobj")) {
+						writer.write("Number " + ii + " parse has dobj.");
+						writer.newLine();
+						writer.write("Sentence : " + line);
+						writer.newLine();
+						writer.newLine();
+						/*
 						System.out.println("Number " + ii + " parse has dobj.");
 						System.out.println("");
+						System.out.println("Sentence : " + line);
+						*/
 						final_tree = t;
 						final_tdl = tdl;
 						break;
@@ -119,13 +130,30 @@ class ParserDemo {
 					break;
 			}
 			if (ii == 5) {
+				writer.append("Sentence : " + line);
+				writer.newLine();
+				writer.append("There are no dobj in 5 parses");
+				writer.newLine();
+				writer.append("===========================================================================");
+				writer.newLine();
+				/*
+				System.out.println("Sentence : " + line);
 				System.out.println("There are no dobj in 5 parses");
+				System.out.println("===========================================================================");
+				*/
 				continue;
 			}
+			
+			TreePrint tp = new TreePrint("penn,typedDependencies");
+			/*
+			tp.printTree(final_tree);
+			System.out.println();
+			*/
 
 			StringBuilder nsbj = new StringBuilder("");
 			StringBuilder dobj = new StringBuilder("");
 			StringBuilder verb = new StringBuilder("");
+			
 
 			for (int i = 0; i < final_tdl.size(); i++) {
 				String extractElement = final_tdl.get(i).reln().toString();
@@ -142,10 +170,21 @@ class ParserDemo {
 					dobj.append(d).append(" ");
 				}
 			}
+			
+			writer.write("SUBJECT :  " + nsbj + "\r\n");
+			writer.newLine();
+			writer.write("VERB : " + verb + "\r\n");
+			writer.newLine();
+			writer.write("DOBJECT : " + dobj + "\r\n");
+			writer.newLine();
+			writer.newLine();
+			writer.close();
+			/*
 			System.out.println("SUBJECT :  " + nsbj + "\r\n");
 			System.out.println("VERB : " + verb + "\r\n");
 			System.out.println("DOBJECT : " + dobj + "\r\n");
 			System.out.println("===========================================================================");
+			*/
 
 		}
 	}

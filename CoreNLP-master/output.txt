@@ -1,0 +1,10 @@
+Number 1 parse has dobj.
+Sentence : User inserts ATM card.
+
+SUBJECT :  inserts 
+
+VERB : atm 
+
+DOBJECT : card 
+
+

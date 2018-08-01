@@ -1,3 +1,19 @@
+User inserts ATM card.
+User enters PIN.
+User chooses ‘CASH’.
+User enters amount.
+User enters account number.
+User checks the amount and chooses between ‘yes’ or ‘no’.
+User chooses between ‘yes’ or ‘no’.
+ATM reads the information of the card.
+ATM requires the user’s PIN.
+ATM validates PIN.
+ATM asks “Which operation do you want to perform?”
+ATM asks amount to withdraw.
+ATM requires account number to withdraw.
+ATM displays the amount which a user entered.
+ATM asks if the user wants a receipt.
+If ‘yes’ is chosen, ATM prints a receipt.
 Collect new books from receipt  of shipment.
 For each book, research book category and catalog numbers. Assign tentative number.
 If new  copy of existing title, enter book information and catalog number into system.
@@ -5,7 +21,7 @@ If new edition of existing title, enter book information, edition information, a
 If new title, assign general catalog number. Assign book copy number.
 Mark book with number.
 Place book on shelving cart.
-Repeat for each book back to step 2.
+Repeat for each book (back to step 2).
 The user will indicate that she wants to order the items that have already been selected.
 The system will present the billing and shipping information that the user previously stored.
 The user will confirm that the existing billing and shipping information should be used for this order.
@@ -33,7 +49,7 @@ Repeat step 4,5, and 6 until all items are added to the order.
 Customer indicates end of order.
 clerk enters end of order.
 Customer submits payment.
- clerk enter amount.
+clerk enter amount.
 Display product offerings, showing categories selected by the user.
 For each selected item in stock, record selected items and quantities, reserving them in inventory.
 Record payment instructions, capturing payment terms and credit card type, number, and expiration date using a secure protocol.
