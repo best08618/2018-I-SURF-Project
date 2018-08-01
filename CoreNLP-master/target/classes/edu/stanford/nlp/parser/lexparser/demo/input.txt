@@ -1,0 +1,101 @@
+Collect new books from receipt  of shipment.
+For each book, research book category and catalog numbers. Assign tentative number.
+If new  copy of existing title, enter book information and catalog number into system.
+If new edition of existing title, enter book information, edition information, and catalog number.
+If new title, assign general catalog number. Assign book copy number.
+Mark book with number.
+Place book on shelving cart.
+Repeat for each book back to step 2.
+The user will indicate that she wants to order the items that have already been selected.
+The system will present the billing and shipping information that the user previously stored.
+The user will confirm that the existing billing and shipping information should be used for this order.
+The system will present the amount that the order will cost, including applicable taxes and shipping charges.
+The user will confirm that the order information is accurate.
+The system will provide the user with a tracking ID for the order.
+The system will submit the order to the fulfillment system for evaluation.
+The fulfillment system will provide the system with an estimated delivery date.
+The system will present the estimated delivery date to the user.
+The user will indicate that the order should be placed.
+The system will request that the billing system should charge the user for the order.
+The billing system will confirm that the charge has been placed for the order.
+The system will submit the order to the fulfillment system for processing.
+The fulfillment system will confirm that the order is being processed.
+The system will indicate to the user that the user has been charged for the order.
+The system will indicate to the user that the order has been placed.
+The user will exit the system.
+Sales clerk answers telephone and connect to a customer.
+Clerk verifies customer information.
+Clerk initiates the creation of a new order.
+Customer requests an item be added to the order.
+Clerk verifies the item (Check item availability use case).
+Clerk adds item to the order.
+Repeat step 4,5, and 6 until all items are added to the order.
+Customer indicates end of order.
+clerk enters end of order.
+Customer submits payment.
+ clerk enter amount.
+Display product offerings, showing categories selected by the user.
+For each selected item in stock, record selected items and quantities, reserving them in inventory.
+Record payment instructions, capturing payment terms and credit card type, number, and expiration date using a secure protocol.
+Record shipping instructions, capturing billing address, shipping address, shipper preferences, and delivery options.
+Record transaction and provide receipt containing a list of the products ordered, their quantity and prices, as well as the billing and shipping addresses and the payment terms. The credit card information should be partially omitted, displaying only the last 4 digits of the credit card number.
+The FieldOfficer activates the “Report Emergency” function of her terminal.
+Friend responds by presenting a form to the FieldOffier.
+The FieldOfficer fills out the form by selecting the emergency level, type, location, and brief description of the situation. The FieldOfficer also describes possible response to the emergency situation. Once the form is completed, the FieldOfficer submits the form.
+Friend receives the form and notifies the Dispatcher.
+The Dispatcher reviews the submitted information and creates an Incident in the database by invoking the OpenIncident use case. The Dispatcher selects a response and acknowledges the report.
+Friend displays the acknowledgment and the selected response to the FieldOffier.
+Customer arrives at a POS checkout with goods and/or services to purchase.
+Cashier starts a new sale.
+Cashier enters item identifier.
+Records each sale line item and presents item description and running total.
+System presents total with taxes calculated.
+Cashier tells Customer the total, and asks for payment.
+Customer pays.
+Handles payment.
+The use case begins when a student wants to enroll in a seminar.
+The student inputs her name and student number into the system via UI23 Security Login Screen.
+The system verifies the student is eligible to enroll in seminars at the university according to business rule BR129 Determine Eligibility to Enroll. [Alt Course A]
+The system displays UI32 Seminar Selection Screen, which indicates the list of available seminars.
+The student indicates the seminar in which she wants to enroll. [Alt Course B: The Student Decides Not to Enroll]
+The system validates the student is eligible to enroll in the seminar according to the business rule BR130 Determine Student Eligibility to Enroll in a Seminar. [Alt Course C]
+The system validates the seminar fits into the existing schedule of the student according to the business rule BR143 Validate Student Seminar Schedule.
+The system calculates the fees for the seminar based on the fee published in the course catalog, applicable student fees, and applicable taxes. Apply business rules BR 180 Calculate Student Fees and BR45 Calculate Taxes for Seminar.
+The system displays the fees via UI33 Display Seminar Fees Screen.
+The system asks the student if she still wants to enroll in the seminar.
+The student indicates she wants to enroll in the seminar.
+The system enrolls the student in the seminar.
+The system informs the student the enrollment was successful via UI88 Seminar Enrollment Summary Screen.
+The system bills the student for the seminar, according to business rule BR100 Bill Student for Seminar.
+The system asks the student if she wants a printed statement of the enrollment.
+The student indicates she wants a printed statement.
+The system prints the enrollment statement UI89 Enrollment Summary Report.
+The use case ends when the student takes the printed statement.
+An applicant wants to enroll in the university.
+The applicant hands a filled out copy of form UI13 University Application Form to the registrar. 
+The registrar visually inspects the forms.
+The registrar determines that the forms have been filled out properly. 
+The registrar clicks on the Create Student icon.
+The system displays UI89 Create Student Screen.
+The registrar inputs the name, address, and phone number of the applicant. 
+The system determines that the applicant does not already exist within the system according to BR37 Potential Match Criteria for New Students. 
+The system determines that the applicant is on the eligible applicants list. 
+The system adds the applicant to its records. The applicant is now considered to be a student.
+The registrar helps the student to enroll in seminars via the use case UC 17 Enroll in Seminar.
+The system calculates the required initial payment in accordance to BR16 Calculate Enrollment Fees.
+The system displays UI15 Fee Summary Screen.
+The registrar asks the student to pay the initial payment in accordance to BR19 Fee Payment Options.
+The student pays the initial fee. 
+The system prints a receipt.
+The registrar hands the student the receipt.
+The use case ends.
+ExamTaker connects to the Exam server. 
+Exam server checks whether ExamTaker is already authenticated and runs authentication process if necessary. 
+ExamTaker selects a exam from a list of options. 
+ExamTaker repeatedly selects a question and either types in a solution, attaches a file with a solution, edits a solution or a]aches a replacement file. 
+ExamTaker either submits completed exam or saves current state. 
+When a completed exam is submitted, Exam server checks that all questions have been attempted and either sends acknowledgement to ExamTaker, or saves current state and notifies ExamTaker of incomplete submission. 
+ExamTaker logs out. 
+
+
+
