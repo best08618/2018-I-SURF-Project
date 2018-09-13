@@ -112,6 +112,6 @@ Subject :  ( i )
 Doject : ( x as 5 ) 
 
 i / ----------------------------------------
-Sentence : I want to confirm that x is same with y.
+Sentence : I want to confirm that x is same with y. 
 There are no dobj in 5 parses
 ===========================================================================
