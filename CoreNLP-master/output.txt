@@ -106,3 +106,12 @@ Doject : ( receipt )
 
 atm / prints / receipt
 ----------------------------------------
+Number 1 parse has dobj.
+Sentence : I want to set x as 5.
+Subject :  ( i ) 
+Doject : ( x as 5 ) 
+
+i / ----------------------------------------
+Sentence : I want to confirm that x is same with y.
+There are no dobj in 5 parses
+===========================================================================

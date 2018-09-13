@@ -14,3 +14,5 @@ ATM requires account number to withdraw.
 ATM displays the amount which a user entered.
 ATM asks if the user wants a receipt.
 If ‘yes’ is chosen, ATM prints a receipt.
+I want to set x as 5.
+I want to confirm that x is same with y.

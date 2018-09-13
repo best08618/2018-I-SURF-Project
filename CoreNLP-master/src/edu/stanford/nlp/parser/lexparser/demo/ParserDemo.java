@@ -44,13 +44,11 @@ class ParserDemo {
 	 */
 	public static void main(String[] args) throws IOException {
 		String parserModel = "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz";
-
 		if (args.length > 0) {
 			parserModel = args[0];
 		}
 		LexicalizedParser lp = LexicalizedParser.loadModel(parserModel);
-
-		if (args.length == 0) {
+		if (args.length == 1) {
 			demoAPI(lp);
 		} else {
 			String textFile = "/Users/zoey/git/2018-I-SURF-Project/CoreNLP-master/src/edu/stanford/nlp/parser/lexparser/demo/input.txt";
@@ -67,7 +65,6 @@ class ParserDemo {
 	 * @throws IOException
 	 */
 	public static void demoDP(LexicalizedParser lp, String filename) throws IOException {
-
 		/*
 		 * original demoDP code Tree parse = lp.apply(sentence); parse.pennPrint();
 		 * System.out.println();
@@ -85,11 +82,11 @@ class ParserDemo {
 		File file = new File(filename);
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufReader = new BufferedReader(fileReader);
-		BufferedWriter writer = new BufferedWriter(new FileWriter("out.txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
 
 		String line = "";
 		while ((line = bufReader.readLine()) != null) {
-
+			System.out.println("----------------------------------------");
 			List<ScoredObject<Tree>> parses;
 			Tree final_tree = null;
 			List<TypedDependency> final_tdl = null;
@@ -136,39 +133,28 @@ class ParserDemo {
 				writer.newLine();
 				writer.append("===========================================================================");
 				writer.newLine();
-				/*
-				 * System.out.println("Sentence : " + line);
-				 * System.out.println("There are no dobj in 5 parses"); System.out.println(
-				 * "==========================================================================="
-				 * );
-				 */
 				continue;
 			}
 
-			//System.out.println("----------------------------------------");
-			//System.out.println("Sentence : " + sent2 + "\n");
+			
 			
 			Relation reln = new Relation(); // make relation class that store govIdx, devIdx, wordIdx, word
-			// ex ) I eat an apple. 
-			// nsubj (eat-2, I-1)
-			// govIdx = 2, devIdx = 1
-			// wordIdx = 0
-			// word = "I"
 			
 			Vector<Relation> nsbjIdx = new Vector<Relation>();
 			Vector<Relation> dobjIdx = new Vector<Relation>();
 			Vector<Relation> compIdx = new Vector<Relation>();
 			Vector<Relation> nmodIdx = new Vector<Relation>();
+		
 			int wordIdx = -1;
 
-			for (int i = 0; i < final_tdl.size(); i++) {
+			for (int i = 0; i < final_tdl.size(); i++) { 
 				String extractElement = final_tdl.get(i).reln().toString();
-				if (extractElement.equals("compound")) {
+				if (extractElement.equals("compound")) { // noun modifier
 					reln = new Relation(final_tdl.get(i).gov().toCopyIndex(), final_tdl.get(i).dep().toCopyIndex(), i); // store govIdx, depIdx, wordIdx
 					reln.setWord(final_tdl.get(i).dep().originalText().toLowerCase()); // store dependency word 
 					compIdx.add(reln); // add relation object to compound vector
 				}
-				if (extractElement.equals("nsubj")) {
+				if (extractElement.equals("nsubj")) { 
 					reln = new Relation(final_tdl.get(i).gov().toCopyIndex(), final_tdl.get(i).dep().toCopyIndex(), i);
 					reln.setWord(final_tdl.get(i).dep().originalText().toLowerCase());
 					nsbjIdx.add(reln);
@@ -177,14 +163,14 @@ class ParserDemo {
 					reln = new Relation(final_tdl.get(i).gov().toCopyIndex(), final_tdl.get(i).dep().toCopyIndex(), i);
 					reln.setWord(final_tdl.get(i).dep().originalText().toLowerCase());
 					dobjIdx.add(reln);
+					
 				}
-				if (extractElement.contains("nmod")) {
+				if (extractElement.contains("nmod")) { 
 					reln = new Relation(final_tdl.get(i).gov().toCopyIndex(), final_tdl.get(i).dep().toCopyIndex(), i);
 					reln.setWord(final_tdl.get(i).dep().originalText().toLowerCase());
 					nmodIdx.add(reln);
 				}
 			}
-			
 			for (int compNum = compIdx.size() - 1; compNum > -1; compNum--) {
 				for (int dobjNum = 0; dobjNum < dobjIdx.size(); dobjNum++) {
 					if (compIdx.get(compNum).govIdx.equals(dobjIdx.get(dobjNum).depIdx)) {
@@ -201,6 +187,7 @@ class ParserDemo {
 				String nmodText;
 				String prep;
 				for (int dobjNum = 0; dobjNum < dobjIdx.size(); dobjNum++) {
+					
 					if (nmodIdx.get(nmodNum).govIdx.equals(dobjIdx.get(dobjNum).depIdx)) { // compare govidx of nmod with depIdx of dobj
 						wordIdx = nmodIdx.get(nmodNum).wordIdx;
 						nmodText = final_tdl.get(wordIdx).reln().toString();
@@ -219,6 +206,97 @@ class ParserDemo {
 					}
 				}
 			}
+			
+			Action act = new Action();
+			Noun subj = new Noun();
+			Noun dobj = new Noun();
+			Verb pred = new Verb();
+			Modifier mod = new Modifier();
+			
+			for (int i = 0; i < final_tdl.size(); i++) {
+				String extractElement = final_tdl.get(i).reln().toString();
+				if (extractElement.contains("compound")) {
+					/*
+					String compText;
+					String sub;
+					compText = final_tdl.get(i).reln().toString();
+					sub = compText.substring(9);
+					if (sub.equals("prt")){
+						pred.setName(final_tdl.get(i).gov().originalText().toLowerCase() + "-" + final_tdl.get(i).dep().originalText().toLowerCase());
+					}*/
+					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+					act.setModifier(mod);
+				}
+				else if (extractElement.equals("nsubj")) {
+					subj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					subj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+					act.setSubj(subj);
+				}
+				
+				else if (extractElement.equals("dobj")) {
+					dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+					act.setDobj(dobj);
+					pred.setName(final_tdl.get(i).gov().originalText().toLowerCase());
+					pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+					act.setVerb(pred);
+				}
+				else if (extractElement.contains("nmod")) {
+					String nmodText;
+					String prep;
+					nmodText = final_tdl.get(i).reln().toString();
+					prep = nmodText.substring(5);
+					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+					mod.setRelation(prep);
+					act.setModifier(mod);
+				}
+				else if (extractElement.equals("amod")) {
+					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+					act.setModifier(mod);
+				}
+				else if(extractElement.equals("advmod")) {
+					mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+					mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+					act.setModifier(mod);
+				}
+				
+			}		
+			
+			System.out.println(" S : " + act.subj.name);
+			System.out.println(" V : " + act.pred.name);
+			
+			for (int i=0; i<act.dobjarr.length; i++) {
+				if (act.dobjarr[i] == null) break;
+				System.out.println(" O : " + act.dobjarr[i].name);
+			}
+			
+			for (int i=0; i < act.molarr.length; i++) {
+				if (act.molarr[i] == null) break;
+				System.out.println(" R : " + act.molarr[i].relation);
+				System.out.println( " M : " + act.molarr[i].name);
+				
+				/*
+				String idx = act.molarr[i].govIdx;
+				
+				for (int j=0; j<act.dobjarr.length; j++) {
+					if (act.dobjarr[j].depIdx.equals(idx)) {
+						System.out.println();
+					}
+					
+				if (act.pred.depIdx.equals(idx)) {
+					
+				}
+				
+				if (act.subj.depIdx.equals(idx)) {
+					
+				}
+				*/
+			}
+			
+			System.out.println();
 			
 			//System.out.print("Subject : ");
 			writer.append("Subject : ");
@@ -263,10 +341,10 @@ class ParserDemo {
 			writer.append("----------------------------------------");
 			writer.newLine();
 			
-			// TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
+			TreePrint tp = new TreePrint("penn,typedDependencies"); // penn -> seg tree ,
 			// typedDependencies -> Dependecy in TreePrint function
 			// System.out.println("printTree function \n");
-			// tp.printTree(final_tree);
+			tp.printTree(final_tree);
 		}
 		writer.close();
 	}
@@ -290,17 +368,9 @@ class ParserDemo {
 		Tree final_tree = null;
 		List<TypedDependency> final_tdl = null;
 
-		//String sent2 = "The registrar inputs the name, address, and phone number of the applicant.";
-		//String sent2 = "The registrar inputs the name, and phone number of the applicant and checks the documents.";
-		//String sent2 = "ATM displays the amount which a user entered.";
-		//String sent2 = "Print the value which user entered on the screen.";
-		//String sent2 = "Don't notify me about this conflict";
-		//String sent2 = "Cashier tells Customer the total, and asks for payment.";
-		//String sent2 = "User has selected the items to be purchased.";
-		//String sent2 = "The user will confirm that the order information is accurate.";
-		//String sent2 = "The system will present the amount that the order will cost including applicable taxes and shipping charges.";
-		//String sent2 = "The applicant hands a filled out copy of form UI13 University Application Form to the registrar. ";
-		String sent2 = "ATM asks amount to withdraw.";
+		//String sent2 = "The user will present the amount that the order will cost, including applicable taxes and shipping charges.";
+		//String sent2 = "The system will provide the user with a tracking ID for the order.";
+		String sent2 = "The system prints the value on the screen.";
 
 		TokenizerFactory<CoreLabel> tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
 		Tokenizer<CoreLabel> tok = tokenizerFactory.getTokenizer(new StringReader(sent2));
@@ -339,13 +409,87 @@ class ParserDemo {
 		// typedDependencies -> Dependecy in TreePrint function
 		// System.out.println("printTree function \n");
 		tp.printTree(final_tree);
+		
+		// test code
+		Action act = new Action();
+		Noun subj = new Noun();
+		Noun dobj = new Noun();
+		Verb pred = new Verb();
+		Modifier mod = new Modifier();
+		
+		for (int i = 0; i < final_tdl.size(); i++) {
+			String extractElement = final_tdl.get(i).reln().toString();
+			if (extractElement.contains("compound")) {
+				String compText;
+				compText = final_tdl.get(i).reln().toString();
+				if (compText.substring(9).equals("prt")){
+					pred.setName(final_tdl.get(i).gov().originalText().toLowerCase() + "-" + final_tdl.get(i).dep().originalText().toLowerCase());
+				}
+				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				act.setModifier(mod);
+			}
+			else if (extractElement.equals("nsubj")) {
+				subj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				subj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+				act.setSubj(subj);
+			}
+			
+			else if (extractElement.equals("dobj")) {
+				dobj.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				dobj.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+				act.setDobj(dobj);
+				pred.setName(final_tdl.get(i).gov().originalText().toLowerCase());
+				pred.setDepIdx(final_tdl.get(i).dep().toCopyIndex());
+				act.setVerb(pred);
+			}
+			else if (extractElement.contains("nmod")) {
+				String nmodText;
+				String prep;
+				nmodText = final_tdl.get(i).reln().toString();
+				prep = nmodText.substring(5);
+				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				mod.setRelation(prep);
+				act.setModifier(mod);
+			}
+			else if (extractElement.equals("amod")) {
+				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				act.setModifier(mod);
+			}
+			else if(extractElement.equals("advmod")) {
+				mod.setName(final_tdl.get(i).dep().originalText().toLowerCase());
+				mod.setGovIdx(final_tdl.get(i).gov().toCopyIndex());
+				act.setModifier(mod);
+			}
+			
+		}		
+		
+		System.out.println(" S : " + act.subj.name);
+		System.out.println(" V : " + act.pred.name);
+		
+		for (int i=0; i<act.dobjarr.length; i++) {
+			if (act.dobjarr[i] == null) break;
+			System.out.println(" O : " + act.dobjarr[i].name);
+		}
+		
+		for (int i=0; i < act.molarr.length; i++) {
+			if (act.molarr[i] == null) break;
+			System.out.println(" R : " + act.molarr[i].relation);
+			System.out.println( " M : " + act.molarr[i].name);
+		}
+		
+		System.out.println();
+	
+		
 		Relation reln = new Relation();
 		Vector<Relation> nsbjIdx = new Vector<Relation>();
 		Vector<Relation> dobjIdx = new Vector<Relation>();
 		Vector<Relation> compIdx = new Vector<Relation>();
 		Vector<Relation> nmodIdx = new Vector<Relation>();
 		int wordIdx = -1;
-
+		
 		for (int i = 0; i < final_tdl.size(); i++) {
 			String extractElement = final_tdl.get(i).reln().toString();
 			if (extractElement.equals("compound")) {
@@ -369,7 +513,6 @@ class ParserDemo {
 				nmodIdx.add(reln);
 			}
 		}
-
 		for (int compNum = compIdx.size() - 1; compNum > -1; compNum--) {
 			for (int dobjNum = 0; dobjNum < dobjIdx.size(); dobjNum++) {
 				if (compIdx.get(compNum).govIdx.equals(dobjIdx.get(dobjNum).depIdx)) {
@@ -404,9 +547,11 @@ class ParserDemo {
 				}
 			}
 		}
+		
+		System.out.println();
 		System.out.print("Subject : ");
 		for (int i = 0; i < nsbjIdx.size(); i++) {
-			System.out.print(nsbjIdx.get(i).word + " ");
+			System.out.print(" ( " +  nsbjIdx.get(i).word + " ) ");
 		}
 		System.out.print("\nDoject : ");
 		for (int j = 0; j < dobjIdx.size(); j++) {
@@ -430,10 +575,6 @@ class ParserDemo {
 		}
 
 	}
-
 	private ParserDemo() {
 	} // static methods only
-	
-	
-
 }
