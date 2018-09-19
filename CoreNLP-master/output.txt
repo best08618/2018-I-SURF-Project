@@ -1,117 +1,60 @@
 Number 1 parse has dobj.
 Sentence : User inserts ATM card.
-Subject :  ( user inserts ) 
-Doject : ( card ) 
-
-user inserts / atm / card
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : User enters PIN.
-Subject :  ( user ) 
-Doject : ( pin ) 
-
-user / enters / pin
 ----------------------------------------
 Number 2 parse has dobj.
 Sentence : User chooses ‘CASH’.
-Subject :  ( user ) 
-Doject : ( cash ) 
-
-user / chooses / cash
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : User enters amount.
-Subject :  ( user ) 
-Doject : ( amount ) 
-
-user / enters / amount
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : User enters account number.
-Subject :  ( user ) 
-Doject : ( account number ) 
-
-user / enters / account number
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : User checks the amount and chooses between ‘yes’ or ‘no’.
-Subject :  ( user )  ( user ) 
-Doject : ( amount ) 
-
-user / checks / amount
-
-user / ----------------------------------------
+----------------------------------------
 Sentence : User chooses between ‘yes’ or ‘no’.
 There are no dobj in 5 parses
 ===========================================================================
 Number 1 parse has dobj.
 Sentence : ATM reads the information of the card.
-Subject :  ( atm ) 
-Doject : ( information of card ) 
-
-atm / reads / information of card
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : ATM requires the user’s PIN.
-Subject :  ( atm ) 
-Doject : ( pin poss user ) 
-
-atm / requires / pin poss user
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : ATM validates PIN.
-Subject :  ( atm ) 
-Doject : ( pin ) 
-
-atm / validates / pin
 ----------------------------------------
 Sentence : ATM asks “Which operation do you want to perform?”
 There are no dobj in 5 parses
 ===========================================================================
 Number 1 parse has dobj.
 Sentence : ATM asks amount to withdraw.
-Subject :  ( atm ) 
-Doject : ( amount ) 
-
-atm / asks / amount
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : ATM requires account number to withdraw.
-Subject :  ( atm ) 
-Doject : ( account number ) 
-
-atm / requires / account number
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : ATM displays the amount which a user entered.
-Subject :  ( atm )  ( user ) 
-Doject : ( amount ) ( amount ) 
-
-atm / displays / amount
-
-user / entered / amount
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : ATM asks if the user wants a receipt.
-Subject :  ( atm )  ( user ) 
-Doject : ( receipt ) 
-
-atm / 
-user / wants / receipt
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : If ‘yes’ is chosen, ATM prints a receipt.
-Subject :  ( atm ) 
-Doject : ( receipt ) 
-
-atm / prints / receipt
 ----------------------------------------
 Number 1 parse has dobj.
 Sentence : I want to set x as 5.
-Subject :  ( i ) 
-Doject : ( x as 5 ) 
-
-i / ----------------------------------------
+----------------------------------------
 Sentence : I want to confirm that x is same with y.
 There are no dobj in 5 parses
 ===========================================================================
+Number 1 parse has dobj.
+Sentence : The system checks repeatedly the passwords of documents.
+----------------------------------------
+Number 1 parse has dobj.
+Sentence : He likes hiking with friends.
+----------------------------------------
