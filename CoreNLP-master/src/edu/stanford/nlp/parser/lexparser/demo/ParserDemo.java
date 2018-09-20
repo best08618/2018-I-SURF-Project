@@ -51,7 +51,7 @@ class ParserDemo {
 		if (args.length == 1) {
 			demoAPI(lp);
 		} else {
-			String textFile = "/Users/zoey/git/2018-I-SURF-Project/CoreNLP-master/src/edu/stanford/nlp/parser/lexparser/demo/input.txt";
+			String textFile = "C:\\Users\\Jinhwa\\git\\2018-I-SURF-Project\\CoreNLP-master\\src\\edu\\stanford\\nlp\\parser\\lexparser\\demo\\input.txt";
 			demoDP(lp, textFile);
 		}
 	}
